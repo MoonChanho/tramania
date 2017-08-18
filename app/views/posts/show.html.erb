@@ -1,0 +1,40 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</head>
+<body>
+<h1><%= @post.id %>번 글 보기</h1>
+<br>
+
+<h2>제 목 : <%= @post.title %></h2>
+
+<h3>내 용 : <%= @post.content %></h3>
+<hr>
+<!-- 댓글 부분 -->
+<h5>댓글</h5>
+<form action="/posts/show/<%= @post.id %>/comments/create" method="post">
+  <input type="text" name="input_comment">
+  <input type="submit">
+</form>
+ 
+  <% @comments.each do |comment| %>
+  <p><%= comment.id %>. <%= comment.content %>
+    <a href="/posts/show/<%= @post.id %>/comments/destroy/<%= comment.id %>" data-method="post" data-confirm="댓글을 삭제합니다.">
+      <!-- comment를 사용할 수 있기때문에 따로 @를 붙히지 않음-->
+      [X]
+    </a>
+  </p>
+  <% end %>
+
+<hr>
+<div class="btn-group" role="group" aria-label="Basic example">
+  <a href="/"><button type="button" class="btn btn-secondary">목록으로</button></a>
+  <a href="/posts/edit/<%= @post.id %>" data-confirm ="수정 합니다."><button type="button" class="btn btn-secondary">수정하기</button></a>
+  <a href="/posts/destroy/<%= @post.id %>" data-confirm ="삭제 합니다." data-method="post"><button type="button" class="btn btn-secondary">삭제하기</button></a>
+</div>
+
+</body>
+</html>
